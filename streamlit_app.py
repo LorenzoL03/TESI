@@ -57,6 +57,7 @@ differenze_df = pd.DataFrame({
     'Costi Alti (€)': [f"{differenza_alto:.2f}"]
 })
 
+st.line_chart(df_risultati[:-1], x="Anni")
 df_risultati = pd.concat([df_risultati, differenze_df], ignore_index=True)
 
 st.subheader("Evoluzione del Capitale")
