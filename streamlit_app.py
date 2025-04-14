@@ -61,3 +61,6 @@ df_risultati = pd.concat([df_risultati, differenze_df], ignore_index=True)
 
 st.subheader("Evoluzione del Capitale")
 st.dataframe(df_risultati)
+
+st.subheader("Grafico")
+st.line_chart(df_risultati)
