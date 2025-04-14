@@ -62,9 +62,15 @@ df_risultati = pd.concat([df_risultati, differenze_df], ignore_index=True)
 st.subheader("Evoluzione del Capitale")
 st.dataframe(df_risultati)
 
-st.subheader("Grafico")
-df_grafico = df_risultati[df_risultati['Anni'].apply(lambda x: isinstance(x, int))]
-for col in ['Costi Bassi (€)', 'Costi Medi (€)', 'Costi Alti (€)']:
-    df_grafico[col] = df_grafico[col].astype(float)
-df_grafico.set_index('Anni', inplace=True)
-st.line_chart(df_grafico)
+# Prepara il dataframe per il grafico (esclude l'ultima riga con le differenze)
+grafico_df = df_risultati[:-1].copy()
+
+# Converte le colonne dei capitali in float
+grafico_df['Anni'] = grafico_df['Anni'].astype(int)
+grafico_df['Costi Bassi (€)'] = grafico_df['Costi Bassi (€)'].astype(float)
+grafico_df['Costi Medi (€)'] = grafico_df['Costi Medi (€)'].astype(float)
+grafico_df['Costi Alti (€)'] = grafico_df['Costi Alti (€)'].astype(float)
+
+# Mostra il grafico
+st.line_chart(grafico_df.set_index('Anni'))
+
