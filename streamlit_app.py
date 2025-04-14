@@ -57,8 +57,14 @@ differenze_df = pd.DataFrame({
     'Costi Alti (€)': [f"{differenza_alto:.2f}"]
 })
 
-st.line_chart(df_risultati[:-1], x="Anni")
 df_risultati = pd.concat([df_risultati, differenze_df], ignore_index=True)
 
 st.subheader("Evoluzione del Capitale")
 st.dataframe(df_risultati)
+
+st.subheader("Grafico")
+df_grafico = df_risultati[df_risultati['Anni'].apply(lambda x: isinstance(x, int))]
+for col in ['Costi Bassi (€)', 'Costi Medi (€)', 'Costi Alti (€)']:
+    df_grafico[col] = df_grafico[col].astype(float)
+df_grafico.set_index('Anni', inplace=True)
+st.line_chart(df_grafico)
